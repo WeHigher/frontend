@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../Axios.js';
 import { Link } from 'react-router-dom';
 import './Main.css';
 
 const MainDashboard = () => {
   useEffect(() => {
     //  API 호출
-    axios
+    api
       .get('/api/user')
       .then((response) => {
         setUserName(response.data.name);

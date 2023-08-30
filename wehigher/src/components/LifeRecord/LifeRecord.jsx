@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../Axios.js';
 import { Link } from 'react-router-dom';
 import './LifeRecord.css';
 import './Modal.css';
@@ -7,7 +7,7 @@ import './Modal.css';
 const LifeRecord = () => {
   useEffect(() => {
     //  API 호출
-    axios
+    api
       .get('/api/user')
       .then((response) => {
         setUserName(response.data.name);
@@ -40,7 +40,7 @@ const LifeRecord = () => {
 
   useEffect(() => {
     // API 호출: 사용자 정보 가져오기
-    axios
+    api
       .get('/api/user')
       .then((response) => {
         const userSchoolRecordId = response.data.schoolRecordId;
@@ -79,8 +79,8 @@ const LifeRecord = () => {
     event.preventDefault();
 
     // 데이터를 API에 POST 요청으로 전송
-    axios
-      .post(`api/school_record/award/${schoolRecordId}`, { awards })
+    api
+      .post(`/api/school_record/award/${schoolRecordId}`, { awards })
       .then((response) => {
         console.log('수상경력 데이터 전송 성공:', response.data);
         closeModal('award'); // 모달 닫기
@@ -98,8 +98,8 @@ const LifeRecord = () => {
   const handleCareerFormSubmit = (event) => {
     event.preventDefault();
 
-    axios
-      .post(`/school_record/career/${schoolRecordId}`, { career }) // API 호출
+    api
+      .post(`/api/school_record/career/${schoolRecordId}`, { career }) // API 호출
       .then((response) => {
         console.log('진로희망 생성 성공:', response.data);
         closeModal('career'); // 모달 닫기
@@ -117,8 +117,8 @@ const LifeRecord = () => {
   const handleCreativeFormSubmit = (event) => {
     event.preventDefault();
 
-    axios
-      .post(`/school_record/creative/${schoolRecordId}`, { creative }) // API 호출
+    api
+      .post(`/api/school_record/creative/${schoolRecordId}`, { creative }) // API 호출
       .then((response) => {
         console.log('창의적체험활동 생성 성공:', response.data);
         closeModal('creative'); // 모달 닫기
@@ -135,9 +135,9 @@ const LifeRecord = () => {
 
   const handleEducationalFormSubmit = (event) => {
     event.preventDefault();
-    // axios를 사용하여 서버에 데이터 전송
-    axios
-      .post(`/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
+    // api를 사용하여 서버에 데이터 전송
+    api
+      .post(`/api/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
       .then((response) => {
         console.log('교과학습발달상황 생성 성공:', response.data);
         closeModal('educational'); // 모달 닫기
@@ -154,9 +154,9 @@ const LifeRecord = () => {
 
   const handleReadingFormSubmit = (event) => {
     event.preventDefault();
-    // axios를 사용하여 서버에 데이터 전송
-    axios
-      .post(`/school_record/reading/${schoolRecordId}`, { reading }) // API 호출
+    // api를 사용하여 서버에 데이터 전송
+    api
+      .post(`/api/school_record/reading/${schoolRecordId}`, { reading }) // API 호출
       .then((response) => {
         console.log('독서활동 생성 성공:', response.data);
         closeModal('reading'); // 모달 닫기
@@ -173,9 +173,9 @@ const LifeRecord = () => {
 
   const handleOpinionFormSubmit = (event) => {
     event.preventDefault();
-    // axios를 사용하여 서버에 데이터 전송
-    axios
-      .post(`/school_record/opinion/${schoolRecordId}`, { opinion }) // API 호출
+    // api를 사용하여 서버에 데이터 전송
+    api
+      .post(`/api/school_record/opinion/${schoolRecordId}`, { opinion }) // API 호출
       .then((response) => {
         console.log('행동특성 및 종합의견 생성 성공:', response.data);
         closeModal('opinion'); // 모달 닫기

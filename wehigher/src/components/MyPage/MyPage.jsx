@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../Axios.js';
 import './MyPage.css';
 
 const MyPage = () => {
@@ -10,7 +10,7 @@ const MyPage = () => {
   // 소셜 로그인 후 회원 정보 설정
   useEffect(() => {
     // API 호출을 통해 회원 정보 가져오기
-    axios
+    api
       .get('/user')
       .then((response) => {
         const userData = response.data;
@@ -29,7 +29,7 @@ const MyPage = () => {
       password: newPassword,
     };
 
-    axios
+    api
       .patch('/user', updatedData)
       .then((response) => {
         console.log('Profile updated successfully:', response.data);
@@ -40,7 +40,7 @@ const MyPage = () => {
   };
 
   const handleDeleteAccount = () => {
-    axios
+    api
       .delete('/user')
       .then((response) => {
         console.log('Account deleted successfully:', response.data);
