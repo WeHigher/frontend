@@ -7,7 +7,7 @@ const MainDashboard = () => {
   useEffect(() => {
     //  API 호출
     api
-      .get('/api/user')
+      .get('/user')
       .then((response) => {
         setUserName(response.data.name);
       })

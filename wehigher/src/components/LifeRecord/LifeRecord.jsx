@@ -8,7 +8,7 @@ const LifeRecord = () => {
   useEffect(() => {
     //  API 호출
     api
-      .get('/api/user')
+      .get('/user')
       .then((response) => {
         setUserName(response.data.name);
       })
@@ -41,7 +41,7 @@ const LifeRecord = () => {
   useEffect(() => {
     // API 호출: 사용자 정보 가져오기
     api
-      .get('/api/user')
+      .get('/user')
       .then((response) => {
         const userSchoolRecordId = response.data.schoolRecordId;
         setSchoolRecordId(userSchoolRecordId);
@@ -80,7 +80,7 @@ const LifeRecord = () => {
 
     // 데이터를 API에 POST 요청으로 전송
     api
-      .post(`/api/school_record/award/${schoolRecordId}`, { awards })
+      .post(`/school_record/award/${schoolRecordId}`, { awards })
       .then((response) => {
         console.log('수상경력 데이터 전송 성공:', response.data);
         closeModal('award'); // 모달 닫기
@@ -99,7 +99,7 @@ const LifeRecord = () => {
     event.preventDefault();
 
     api
-      .post(`/api/school_record/career/${schoolRecordId}`, { career }) // API 호출
+      .post(`/school_record/career/${schoolRecordId}`, { career }) // API 호출
       .then((response) => {
         console.log('진로희망 생성 성공:', response.data);
         closeModal('career'); // 모달 닫기
@@ -118,7 +118,7 @@ const LifeRecord = () => {
     event.preventDefault();
 
     api
-      .post(`/api/school_record/creative/${schoolRecordId}`, { creative }) // API 호출
+      .post(`/school_record/creative/${schoolRecordId}`, { creative }) // API 호출
       .then((response) => {
         console.log('창의적체험활동 생성 성공:', response.data);
         closeModal('creative'); // 모달 닫기
@@ -137,7 +137,7 @@ const LifeRecord = () => {
     event.preventDefault();
     // api를 사용하여 서버에 데이터 전송
     api
-      .post(`/api/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
+      .post(`/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
       .then((response) => {
         console.log('교과학습발달상황 생성 성공:', response.data);
         closeModal('educational'); // 모달 닫기
@@ -156,7 +156,7 @@ const LifeRecord = () => {
     event.preventDefault();
     // api를 사용하여 서버에 데이터 전송
     api
-      .post(`/api/school_record/reading/${schoolRecordId}`, { reading }) // API 호출
+      .post(`/school_record/reading/${schoolRecordId}`, { reading }) // API 호출
       .then((response) => {
         console.log('독서활동 생성 성공:', response.data);
         closeModal('reading'); // 모달 닫기
@@ -175,7 +175,7 @@ const LifeRecord = () => {
     event.preventDefault();
     // api를 사용하여 서버에 데이터 전송
     api
-      .post(`/api/school_record/opinion/${schoolRecordId}`, { opinion }) // API 호출
+      .post(`/school_record/opinion/${schoolRecordId}`, { opinion }) // API 호출
       .then((response) => {
         console.log('행동특성 및 종합의견 생성 성공:', response.data);
         closeModal('opinion'); // 모달 닫기
