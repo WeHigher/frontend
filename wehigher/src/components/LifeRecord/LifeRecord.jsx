@@ -657,13 +657,25 @@ const LifeRecord = () => {
                       </button>
                     </div>
                     <div className="section-content">
-                      {educational ? (
-                        <p>{educational}</p>
+                      {educational.length > 0 ? (
+                        <div>
+                          {educational.map((data, index) => (
+                            <div key={index}>
+                              학년: {data.grade}<br />
+                              학기: {data.semester}<br />
+                              과목: {data.subject}<br />
+                              코스: {data.course}<br />
+                              순위: {data.rank}<br />
+                              상세 및 특기사항: {data.detailAndSpecialty}
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p>교과학습발달상황 내용이 설정되지 않았습니다.</p>
                       )}
                     </div>
                   </div>
+
 
                   {/* reading section */}
                   <div className="reading-section">
