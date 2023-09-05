@@ -1,10 +1,17 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import api from '../../Axios.js';
 import './Login.css';
 
 const SocialLoginApp = () => {
   const handleKakaoLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/kakao/';
+    fetch('http://localhost:8080/auth/kakao/')
+      .then(response => {
+        const url = response.url;
+        window.location.href = url;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   const handleNaverLogin = () => {

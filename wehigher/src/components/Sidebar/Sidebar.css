@@ -1,0 +1,39 @@
+/* Sidebar.css */
+.sidebar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+.sidebar-user-info {
+    font-weight: bold;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    color: #fff;
+    margin-top: 10px;
+    display: block;
+    background-color: #333;
+}
+
+.sidebar-link:hover {
+    text-decoration: underline;
+}
+
+.sidebar-divider {
+    margin-top: 20px;
+    border-top: 1px solid #fff;
+}
+
+.sidebar-interview-link {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    margin-top: 10px;
+}
+
+.sidebar-interview-link i {
+    margin-right: 5px;
+}

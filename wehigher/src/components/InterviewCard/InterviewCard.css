@@ -1,0 +1,13 @@
+/* InterviewCard.css */
+.interview-card {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.interview-card-content {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
