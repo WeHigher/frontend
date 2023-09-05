@@ -35,6 +35,31 @@ const MainDashboard = () => {
     }
   };
 
+  const [hasRequestBeenMade, setHasRequestBeenMade] = useState(false);
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    if (!hasRequestBeenMade) {
+      const jwtToken = localStorage.getItem('jwtToken');
+
+      if (jwtToken) {
+        api.post('/school_record', {}, {
+          headers: {
+            'Authorization': `Bearer ${jwtToken}`,
+          },
+        })
+          .then((response) => {
+            console.log('POST 요청 성공:', response.data);
+          })
+          .catch((error) => {
+            console.error('POST 요청 실패:', error);
+          });
+      }
+
+      setHasRequestBeenMade(true);
+    }
+  }
+
   return (
     <html lang="en">
       <head>
@@ -75,7 +100,7 @@ const MainDashboard = () => {
                   <div class="sb-sidenav-menu-heading">
                     <i class="fas fa-book-open"></i> 생활기록부
                   </div>
-                  <a class="nav-link" href="/liferecord">
+                  <a className="nav-link" href="/liferecord/" onClick={handleLinkClick}>
                     <div class="sb-nav-link-icon"></div>내 생활기록부
                   </a>
                   <div class="sb-sidenav-menu-heading">

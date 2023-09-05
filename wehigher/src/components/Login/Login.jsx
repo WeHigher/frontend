@@ -4,11 +4,11 @@ import './Login.css';
 
 const SocialLoginApp = () => {
   const handleKakaoLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/kakao/callback';
+    window.location.href = 'http://localhost:8080/auth/kakao/';
   };
 
   const handleNaverLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/naver/callback';
+    window.location.href = 'http://localhost:8080/auth/naver/';
   };
 
   return (
