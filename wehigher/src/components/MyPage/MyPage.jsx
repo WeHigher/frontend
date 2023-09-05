@@ -82,11 +82,19 @@ const MyPage = () => {
       <div className="section">
         <h3>회원 정보 수정</h3>
         <div className="form-group">
-          <label>새 비밀번호</label>
+          <label>수정할 이름</label>
           <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>수정할 이메일</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="button-container">

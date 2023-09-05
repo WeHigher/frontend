@@ -53,34 +53,64 @@ const LifeRecord = () => {
 
   /**********  수상경력 모달 **********/
   const [isAwardModalOpen, setIsAwardModalOpen] = useState(false);
-  const [awards, setAwards] = useState([]); // 수상 기록 배열
+  const [awards, setAwards] = useState([
+    {
+      name: '',
+      tier: '',
+      date: '',
+      institution: '',
+      target: '',
+    },
+  ]); // 수상 기록 배열
 
   const addAward = () => {
-    setAwards([...awards, { title: '', date: '' }]);
+    setAwards([
+      ...awards,
+      {
+        name: '',
+        tier: '',
+        date: '',
+        institution: '',
+        target: '',
+      },
+    ]);
   };
 
   const removeAward = (index) => {
-    const newAwards = awards.filter((_, i) => i !== index);
+    const newAwards = [...awards];
+    newAwards.splice(index, 1);
     setAwards(newAwards);
   };
 
   const handleAwardChange = (event, index, field) => {
-    const newAwards = [...awards];
-    if (field === 'title') {
-      newAwards[index].title = event.target.value;
-    } else if (field === 'date') {
-      newAwards[index].date = event.target.value;
+    if (
+      awards &&
+      Array.isArray(awards) &&
+      index >= 0 &&
+      index < awards.length
+    ) {
+      const newAwards = [...awards];
+      if (newAwards[index]) {
+        newAwards[index][field] = event.target.value;
+        setAwards(newAwards);
+      }
     }
-    setAwards(newAwards);
   };
 
   // 입력 폼 제출 핸들러
   const handleAwardFormSubmit = (event) => {
     event.preventDefault();
 
-    // 데이터를 API에 POST 요청으로 전송
+    const awardsData = awards.map((award) => ({
+      title: award.name,
+      tier: award.tier,
+      date: award.date,
+      institution: award.institution,
+      target: award.target,
+    }));
+
     api
-      .post(`/school_record/award/${schoolRecordId}`, { awards })
+      .post(`/school_record/award/${schoolRecordId}`, { awards: awardsData })
       .then((response) => {
         console.log('수상경력 데이터 전송 성공:', response.data);
         closeModal('award'); // 모달 닫기
@@ -89,17 +119,61 @@ const LifeRecord = () => {
         console.error('수상경력 데이터 전송 실패:', error);
       });
   };
+
   /********************************************/
 
   /********** 진로희망 모달 **********/
   const [isCareerModalOpen, setIsCareerModalOpen] = useState(false); // 진로희망 모달 열림 여부
-  const [career, setCareer] = useState(''); // 진로희망 입력값
+  const [careerHope, setCareerHope] = useState([
+    {
+      grade: 1,
+      specialtyOrInterest: '',
+      studentHope: '',
+      parentHope: '',
+      reason: '',
+    },
+    {
+      grade: 2,
+      specialtyOrInterest: '',
+      studentHope: '',
+      parentHope: '',
+      reason: '',
+    },
+    {
+      grade: 3,
+      specialtyOrInterest: '',
+      studentHope: '',
+      parentHope: '',
+      reason: '',
+    },
+  ]);
+
+  // 진로희망 입력값
+
+  const handleCareerHopeChange = (event, index, field) => {
+    const newCareerHope = [...careerHope];
+    newCareerHope[index][field] = event.target.value;
+    setCareerHope(newCareerHope);
+  };
+
+  const removeCareerHope = (index) => {
+    const newCareerHope = careerHope.filter((_, i) => i !== index);
+    setCareerHope(newCareerHope);
+  };
 
   const handleCareerFormSubmit = (event) => {
     event.preventDefault();
 
+    const careerData = careerHope.map((hope) => ({
+      grade: hope.grade,
+      specialtyOrInterest: hope.specialtyOrInterest,
+      studentHope: hope.studentHope,
+      parentHope: hope.parentHope,
+      reason: hope.reason,
+    }));
+
     api
-      .post(`/school_record/career/${schoolRecordId}`, { career }) // API 호출
+      .post(`/school_record/career/${schoolRecordId}`, { career: careerData }) // API 호출
       .then((response) => {
         console.log('진로희망 생성 성공:', response.data);
         closeModal('career'); // 모달 닫기
@@ -108,17 +182,39 @@ const LifeRecord = () => {
         console.error('진로희망 생성 실패:', error);
       });
   };
+
   /********************************************/
 
   /********** 창의적체험활동 모달 **********/
   const [isCreativeModalOpen, setIsCreativeModalOpen] = useState(false); // 창의적체험활동 모달 열림 여부
-  const [creative, setCreative] = useState(''); // 창의적체험활동 입력값
+  const [creativeActivities, setCreativeActivities] = useState([]); // 창의적체험활동 입력값 초기화
+
+  const handleCreativeChange = (event, index, field) => {
+    const newCreativeActivities = [...creativeActivities];
+    newCreativeActivities[index][field] = event.target.value;
+    setCreativeActivities(newCreativeActivities);
+  };
+
+  const addCreativeActivity = () => {
+    setCreativeActivities([
+      ...creativeActivities,
+      { grade: '', area: '', activityTime: '', specialty: '' },
+    ]);
+  };
+
+  const removeCreativeActivity = (index) => {
+    const newCreativeActivities = creativeActivities.filter(
+      (_, i) => i !== index
+    );
+    setCreativeActivities(newCreativeActivities);
+  };
 
   const handleCreativeFormSubmit = (event) => {
     event.preventDefault();
 
+    // 데이터를 API에 POST 요청으로 전송
     api
-      .post(`/school_record/creative/${schoolRecordId}`, { creative }) // API 호출
+      .post(`/school_record/creative/${schoolRecordId}`, { creativeActivities })
       .then((response) => {
         console.log('창의적체험활동 생성 성공:', response.data);
         closeModal('creative'); // 모달 닫기
@@ -127,11 +223,37 @@ const LifeRecord = () => {
         console.error('창의적체험활동 생성 실패:', error);
       });
   };
+
   /********************************************/
 
   /********** 교과학습발달상황 모달 **********/
   const [isEducationalModalOpen, setIsEducationalModalOpen] = useState(false); // 교과학습발달상황 모달 열림 여부
-  const [educational, setEducational] = useState(''); // 교과학습발달상황 입력값
+  const [educational, setEducational] = useState([]); // 교과학습발달상황 입력값
+
+  const handleEducationalChange = (event, index, field) => {
+    const newEducational = [...educational];
+    newEducational[index][field] = event.target.value;
+    setEducational(newEducational);
+  };
+
+  const addEducational = () => {
+    setEducational([
+      ...educational,
+      {
+        grade: 1,
+        semester: '',
+        subject: '',
+        course: '',
+        rank: 1,
+        detailAndSpecialty: '',
+      },
+    ]);
+  };
+
+  const removeEducational = (index) => {
+    const newEducational = educational.filter((_, i) => i !== index);
+    setEducational(newEducational);
+  };
 
   const handleEducationalFormSubmit = (event) => {
     event.preventDefault();
@@ -205,22 +327,22 @@ const LifeRecord = () => {
   const closeModal = (modalName) => {
     if (modalName === 'award') {
       setIsAwardModalOpen(false);
-      setAwards([]); // 모달 닫을 때 입력값 초기화
+      // setAwards([]); // 모달 닫을 때 입력값 초기화
     } else if (modalName === 'career') {
       setIsCareerModalOpen(false);
-      setCareer(''); // 모달 닫을 때 입력값 초기화
+      // setCareerHope('');
     } else if (modalName === 'creative') {
       setIsCreativeModalOpen(false);
-      setCreative('');
+      // setCreativeActivities('');
     } else if (modalName === 'educational') {
       setIsEducationalModalOpen(false);
-      setEducational('');
+      // setEducational('');
     } else if (modalName === 'reading') {
       setIsReadingModalOpen(false);
-      setReading('');
+      // setReading('');
     } else if (modalName === 'opinion') {
       setIsOpinionModalOpen(false);
-      setReading('');
+      // setReading('');
     }
   };
 
@@ -332,23 +454,77 @@ const LifeRecord = () => {
                     </a>
                   </ol>
                   {/* awards section */}
-                  <section class="awards-section">
-                    <div class="section-header">
+                  <section className="awards-section">
+                    <div className="section-header">
                       <h4>수상경력</h4>
                       <button
-                        class="btn btn-secondary"
+                        className="btn btn-secondary"
                         onClick={() => openModal('award')}
                       >
                         수정
                       </button>
                     </div>
-                    <div class="section-content">
+                    <div className="section-content">
                       {awards.map((award, index) => (
-                        <div key={index} className="award-item">
-                          <p>수상 제목: {award.title}</p>
-                          <p>수상 날짜: {award.date}</p>
+                        <div key={index} className="award-form">
+                          <div className="form-group">
+                            <label>수상명</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.name}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'name')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>등급(위)</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.tier}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'tier')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>수상일자</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.date}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'date')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>수여기관</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.institution}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'institution')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>참가대상(참가인원)</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.target}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'target')
+                              }
+                            />
+                          </div>
                           <button
-                            class="btn btn-danger"
+                            type="button"
+                            className="modal-btn btn-danger"
                             onClick={() => removeAward(index)}
                           >
                             삭제
@@ -357,6 +533,7 @@ const LifeRecord = () => {
                       ))}
                     </div>
                   </section>
+
                   {/* career section */}
                   <div className="career-section">
                     <div className="section-header">
@@ -369,13 +546,24 @@ const LifeRecord = () => {
                       </button>
                     </div>
                     <div className="section-content">
-                      {career ? (
-                        <p>{career}</p>
+                      {careerHope.length > 0 ? (
+                        <div>
+                          {careerHope.map((hope, index) => (
+                            <div key={index} className="career-hope-form">
+                              <p>학년: {hope.grade}</p>
+                              <p>특기 또는 흥미: {hope.specialtyOrInterest}</p>
+                              <p>진로 희망 학생: {hope.studentHope}</p>
+                              <p>진로 희망 학부모: {hope.parentHope}</p>
+                              <p>희망 사유: {hope.reason}</p>
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p>진로희망이 설정되지 않았습니다.</p>
                       )}
                     </div>
                   </div>
+
                   {/* creative section */}
                   <div className="creative-section">
                     <div className="section-header">
@@ -388,13 +576,23 @@ const LifeRecord = () => {
                       </button>
                     </div>
                     <div className="section-content">
-                      {creative ? (
-                        <p>{creative}</p>
+                      {creativeActivities.length > 0 ? (
+                        <div>
+                          {creativeActivities.map((activity, index) => (
+                            <div key={index} className="creative-activity">
+                              <p>학년: {activity.grade}</p>
+                              <p>영역: {activity.area}</p>
+                              <p>활동 시간: {activity.activityTime} 시간</p>
+                              <p>특기사항: {activity.specialty}</p>
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p>창의적체험활동 내용이 설정되지 않았습니다.</p>
                       )}
                     </div>
                   </div>
+
                   {/* educational section */}
                   <div className="educational-section">
                     <div className="section-header">
@@ -472,29 +670,61 @@ const LifeRecord = () => {
                     </button>
                   </div>
                   <div className="modal-body">
-                    {/* 수상 기록 입력 폼 */}
                     <form onSubmit={handleAwardFormSubmit}>
                       {awards.map((award, index) => (
                         <div key={index} className="award-form">
                           <div className="form-group">
-                            <label>수상 제목</label>
+                            <label>수상명</label>
                             <input
                               type="text"
                               className="form-control"
-                              value={award.title}
+                              value={award.name}
                               onChange={(e) =>
-                                handleAwardChange(e, index, 'title')
+                                handleAwardChange(e, index, 'name')
                               }
                             />
                           </div>
                           <div className="form-group">
-                            <label>수상 날짜</label>
+                            <label>등급(위)</label>
                             <input
-                              type="date"
+                              type="text"
+                              className="form-control"
+                              value={award.tier}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'tier')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>수상연월일</label>
+                            <input
+                              type="text"
                               className="form-control"
                               value={award.date}
                               onChange={(e) =>
                                 handleAwardChange(e, index, 'date')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>수여기관</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.institution}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'institution')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>참가대상(참가인원)</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={award.target}
+                              onChange={(e) =>
+                                handleAwardChange(e, index, 'target')
                               }
                             />
                           </div>
@@ -544,16 +774,77 @@ const LifeRecord = () => {
                   </div>
                   <div className="modal-body">
                     <form onSubmit={handleCareerFormSubmit}>
-                      {/* 추가된 진로희망 입력 폼 */}
-                      <div className="form-group">
-                        <label>희망 진로</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={career}
-                          onChange={(e) => setCareer(e.target.value)}
-                        />
-                      </div>
+                      {careerHope.map((hope, index) => (
+                        <div key={index} className="career-hope-form">
+                          <div className="form-group">
+                            <label>학년</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              value={hope.grade}
+                              onChange={(e) =>
+                                handleCareerHopeChange(e, index, 'grade')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>특기 또는 흥미</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={hope.specialtyOrInterest}
+                              onChange={(e) =>
+                                handleCareerHopeChange(
+                                  e,
+                                  index,
+                                  'specialtyOrInterest'
+                                )
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>진로 희망 학생</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={hope.studentHope}
+                              onChange={(e) =>
+                                handleCareerHopeChange(e, index, 'studentHope')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>진로 희망 학부모</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={hope.parentHope}
+                              onChange={(e) =>
+                                handleCareerHopeChange(e, index, 'parentHope')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>희망 사유</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={hope.reason}
+                              onChange={(e) =>
+                                handleCareerHopeChange(e, index, 'reason')
+                              }
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className="modal-btn btn-danger"
+                            onClick={() => removeCareerHope(index)}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
+
                       <div className="submit-button-container">
                         <button
                           type="submit"
@@ -584,21 +875,77 @@ const LifeRecord = () => {
                   </div>
                   <div className="modal-body">
                     <form onSubmit={handleCreativeFormSubmit}>
-                      <div className="form-group">
-                        <label>창의적체험활동 내용</label>
-                        <textarea
-                          className="form-control"
-                          rows="4"
-                          value={creative}
-                          onChange={(e) => setCreative(e.target.value)}
-                        />
-                      </div>
+                      {creativeActivities.map((activity, index) => (
+                        <div key={index} className="creative-activity-form">
+                          <div className="form-group">
+                            <label>학년</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              value={activity.grade}
+                              onChange={(e) =>
+                                handleCreativeChange(e, index, 'grade')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>영역</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={activity.area}
+                              onChange={(e) =>
+                                handleCreativeChange(e, index, 'area')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>활동 시간</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              value={activity.activityTime}
+                              onChange={(e) =>
+                                handleCreativeChange(e, index, 'activityTime')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>특기사항</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={activity.specialty}
+                              onChange={(e) =>
+                                handleCreativeChange(e, index, 'specialty')
+                              }
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className="modal-btn btn-danger"
+                            onClick={() => removeCreativeActivity(index)}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
+
                       <button
-                        type="submit"
-                        className="modal-btn modal-btn-primary"
+                        type="button"
+                        className="modal-btn btn-primary"
+                        onClick={addCreativeActivity}
                       >
-                        저장
+                        추가하기
                       </button>
+                      <div className="submit-button-container">
+                        <button
+                          type="submit"
+                          className="modal-btn modal-btn-primary"
+                        >
+                          저장
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -621,21 +968,102 @@ const LifeRecord = () => {
                   </div>
                   <div className="modal-body">
                     <form onSubmit={handleEducationalFormSubmit}>
-                      <div className="form-group">
-                        <label>교과학습발달상황 내용</label>
-                        <textarea
-                          className="form-control"
-                          rows="4"
-                          value={educational}
-                          onChange={(e) => setEducational(e.target.value)}
-                        />
-                      </div>
+                      {educational.map((data, index) => (
+                        <div key={index} className="educational-data">
+                          <div className="form-group">
+                            <label>학년</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              value={data.grade}
+                              onChange={(e) =>
+                                handleEducationalChange(e, index, 'grade')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>학기</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={data.semester}
+                              onChange={(e) =>
+                                handleEducationalChange(e, index, 'semester')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>과목</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={data.subject}
+                              onChange={(e) =>
+                                handleEducationalChange(e, index, 'subject')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>코스</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={data.course}
+                              onChange={(e) =>
+                                handleEducationalChange(e, index, 'course')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>순위</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              value={data.rank}
+                              onChange={(e) =>
+                                handleEducationalChange(e, index, 'rank')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>상세 및 특기사항</label>
+                            <textarea
+                              className="form-control"
+                              rows="4"
+                              value={data.detailAndSpecialty}
+                              onChange={(e) =>
+                                handleEducationalChange(
+                                  e,
+                                  index,
+                                  'detailAndSpecialty'
+                                )
+                              }
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className="modal-btn btn-danger"
+                            onClick={() => removeEducational(index)}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
                       <button
-                        type="submit"
-                        className="modal-btn modal-btn-primary"
+                        type="button"
+                        className="modal-btn btn-primary"
+                        onClick={addEducational}
                       >
-                        저장
+                        추가하기
                       </button>
+                      <div className="submit-button-container">
+                        <button
+                          type="submit"
+                          className="modal-btn modal-btn-primary"
+                        >
+                          저장
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
