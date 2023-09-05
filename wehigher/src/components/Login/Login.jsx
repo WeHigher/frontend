@@ -4,14 +4,7 @@ import './Login.css';
 
 const SocialLoginApp = () => {
   const handleKakaoLogin = () => {
-    fetch('http://localhost:8080/auth/kakao/')
-      .then(response => {
-        const url = response.url;
-        window.location.href = url;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    window.location.href = 'http://localhost:8080/auth/kakao/';
   };
 
   const handleNaverLogin = () => {

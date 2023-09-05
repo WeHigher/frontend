@@ -4,6 +4,23 @@ import Navbar from '../Navbar/Navbar';
 import InterviewCard from '../InterviewCard/InterviewCard';
 import Sidebar from '../Sidebar/Sidebar';
 import './Main.css';
+import axios from 'axios'
+
+// 쿠키에서 액세스 토큰을 가져오는 함수
+function getAccessTokenFromCookie() {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === 'access_token') {
+      return decodeURIComponent(value);
+    }
+  }
+  return null;
+}
+
+// 가져온 액세스 토큰을 변수에 저장
+const accessToken = getAccessTokenFromCookie();
+axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 const MainDashboard = () => {
   const [userName, setUserName] = useState('');
