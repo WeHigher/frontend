@@ -268,17 +268,40 @@ const LifeRecord = () => {
         console.error('교과학습발달상황 생성 실패:', error);
       });
   };
+
   /********************************************/
 
   /********** 독서활동 모달 **********/
   const [isReadingModalOpen, setIsReadingModalOpen] = useState(false); // 독서활동 모달 열림 여부
-  const [reading, setReading] = useState(''); // 독서활동 입력값
+  const [readings, setReadings] = useState([]); // 독서활동 입력값
+
+  const handleReadingChange = (event, index, field) => {
+    const newReadings = [...readings];
+    newReadings[index][field] = event.target.value;
+    setReadings(newReadings);
+  };
+
+  const addReading = () => {
+    setReadings((prevReadings) => [
+      ...prevReadings,
+      {
+        grade: 1,
+        semester: '',
+        title: '',
+        subject: '',
+      },
+    ]);
+  };
+
+  const removeReading = (index) => {
+    setReadings((prevReadings) => prevReadings.filter((_, i) => i !== index));
+  };
 
   const handleReadingFormSubmit = (event) => {
     event.preventDefault();
     // api를 사용하여 서버에 데이터 전송
     api
-      .post(`/school_record/reading/${schoolRecordId}`, { reading }) // API 호출
+      .post(`/school_record/reading/${schoolRecordId}`, { readings })
       .then((response) => {
         console.log('독서활동 생성 성공:', response.data);
         closeModal('reading'); // 모달 닫기
@@ -287,17 +310,45 @@ const LifeRecord = () => {
         console.error('독서활동 생성 실패:', error);
       });
   };
+
   /********************************************/
 
   /********** 행동특성 및 종합의견 모달 **********/
   const [isOpinionModalOpen, setIsOpinionModalOpen] = useState(false); // 행동특성 및 종합의견 모달 열림 여부
-  const [opinion, setOpinion] = useState(''); // 독서활동 입력값
+  const [opinions, setOpinions] = useState([]); // 행동특성 및 종합의견 입력값
+
+  const handleOpinionChange = (event, index, field) => {
+    const newOpinions = [...opinions];
+    newOpinions[index][field] = event.target.value;
+    setOpinions(newOpinions);
+  };
+
+  const addOpinion = () => {
+    setOpinions((prevOpinions) => [
+      ...prevOpinions,
+      {
+        grade: '',
+        content: '',
+      },
+    ]);
+  };
+
+  const removeOpinion = (index) => {
+    setOpinions((prevOpinions) => prevOpinions.filter((_, i) => i !== index));
+  };
 
   const handleOpinionFormSubmit = (event) => {
     event.preventDefault();
-    // api를 사용하여 서버에 데이터 전송
+    // API를 사용하여 서버에 데이터 전송
+    const formattedOpinions = opinions.map((opinion) => ({
+      grade: opinion.grade,
+      content: opinion.content,
+    }));
+
     api
-      .post(`/school_record/opinion/${schoolRecordId}`, { opinion }) // API 호출
+      .post(`/school_record/opinion/${schoolRecordId}`, {
+        opinions: formattedOpinions,
+      })
       .then((response) => {
         console.log('행동특성 및 종합의견 생성 성공:', response.data);
         closeModal('opinion'); // 모달 닫기
@@ -306,6 +357,7 @@ const LifeRecord = () => {
         console.error('행동특성 및 종합의견 생성 실패:', error);
       });
   };
+
   /********************************************/
 
   const openModal = (modalName) => {
@@ -612,6 +664,7 @@ const LifeRecord = () => {
                       )}
                     </div>
                   </div>
+
                   {/* reading section */}
                   <div className="reading-section">
                     <div className="section-header">
@@ -624,8 +677,17 @@ const LifeRecord = () => {
                       </button>
                     </div>
                     <div className="section-content">
-                      {reading ? (
-                        <p>{reading}</p>
+                      {readings.length > 0 ? (
+                        <div>
+                          {readings.map((activity, index) => (
+                            <div key={index}>
+                              <p>학년: {activity.grade}</p>
+                              <p>학기: {activity.semester}</p>
+                              <p>제목: {activity.title}</p>
+                              <p>주제: {activity.subject}</p>
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p>독서활동 내용이 설정되지 않았습니다.</p>
                       )}
@@ -644,8 +706,16 @@ const LifeRecord = () => {
                       </button>
                     </div>
                     <div className="section-content">
-                      {opinion ? (
-                        <p>{opinion}</p>
+                      {opinions.length > 0 ? (
+                        <div>
+                          {opinions.map((opinion, index) => (
+                            <div key={index}>
+                              학년: {opinion.grade}
+                              <br />
+                              내용: {opinion.content}
+                            </div>
+                          ))}
+                        </div>
                       ) : (
                         <p>행동특성 및 종합의견 내용이 설정되지 않았습니다.</p>
                       )}
@@ -1086,15 +1156,60 @@ const LifeRecord = () => {
                   </div>
                   <div className="modal-body">
                     <form onSubmit={handleReadingFormSubmit}>
-                      <div className="form-group">
-                        <label>독서활동 내용</label>
-                        <textarea
-                          className="form-control"
-                          rows="4"
-                          value={reading}
-                          onChange={(e) => setReading(e.target.value)}
-                        />
-                      </div>
+                      {readings.map((readingData, index) => (
+                        <div key={index} className="form-group">
+                          <label>학년</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            value={readingData.grade}
+                            onChange={(e) =>
+                              handleReadingChange(e, index, 'grade')
+                            }
+                          />
+                          <label>학기</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={readingData.semester}
+                            onChange={(e) =>
+                              handleReadingChange(e, index, 'semester')
+                            }
+                          />
+                          <label>제목</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={readingData.title}
+                            onChange={(e) =>
+                              handleReadingChange(e, index, 'title')
+                            }
+                          />
+                          <label>주제</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={readingData.subject}
+                            onChange={(e) =>
+                              handleReadingChange(e, index, 'subject')
+                            }
+                          />
+                          <button
+                            type="button"
+                            className="modal-btn btn-danger"
+                            onClick={() => removeReading(index)}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        className="modal-btn btn-primary"
+                        onClick={addReading}
+                      >
+                        추가하기
+                      </button>
                       <button
                         type="submit"
                         className="modal-btn modal-btn-primary"
@@ -1123,21 +1238,54 @@ const LifeRecord = () => {
                   </div>
                   <div className="modal-body">
                     <form onSubmit={handleOpinionFormSubmit}>
-                      <div className="form-group">
-                        <label>행동특성 및 종합의견 내용</label>
-                        <textarea
-                          className="form-control"
-                          rows="4"
-                          value={opinion}
-                          onChange={(e) => setOpinion(e.target.value)}
-                        />
-                      </div>
+                      {opinions.map((opinion, index) => (
+                        <div key={index} className="opinion-data">
+                          <div className="form-group">
+                            <label>학년</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={opinion.grade}
+                              onChange={(e) =>
+                                handleOpinionChange(e, index, 'grade')
+                              }
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>내용</label>
+                            <textarea
+                              className="form-control"
+                              rows="4"
+                              value={opinion.content}
+                              onChange={(e) =>
+                                handleOpinionChange(e, index, 'content')
+                              }
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className="modal-btn btn-danger"
+                            onClick={() => removeOpinion(index)}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
                       <button
-                        type="submit"
-                        className="modal-btn modal-btn-primary"
+                        type="button"
+                        className="modal-btn btn-primary"
+                        onClick={addOpinion}
                       >
-                        저장
+                        추가하기
                       </button>
+                      <div className="submit-button-container">
+                        <button
+                          type="submit"
+                          className="modal-btn modal-btn-primary"
+                        >
+                          저장
+                        </button>
+                      </div>
                     </form>
                   </div>
                 </div>
