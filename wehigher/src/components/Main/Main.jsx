@@ -16,16 +16,19 @@ function getAccessTokenFromCookie() {
     return null;
   }
   
-  // 가져온 액세스 토큰을 변수에 저장
-  const accessToken = getAccessTokenFromCookie();
-  api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
 
 const MainDashboard = () => {
   useEffect(() => {
+    const accessToken = getAccessTokenFromCookie();
+    console.log(accessToken)
+    api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     //  API 호출
     api
       .get('/user')
       .then((response) => {
+          // 가져온 액세스 토큰을 변수에 저장
+        
         setUserName(response.data.name);
       })
       .catch((error) => {
@@ -54,10 +57,15 @@ const MainDashboard = () => {
 
   // 클릭 이벤트 핸들러
   const handleLinkClick = (event) => {
+    const accessToken = getAccessTokenFromCookie();
+    console.log(accessToken)
+    api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
     event.preventDefault(); // 기본 링크 동작 방지
     // POST 요청 보내기
     api.post('/school_record', { /* POST 데이터 */ })
       .then((response) => {
+
         // POST 요청 성공 시 처리
         console.log('POST 요청 성공:', response.data);
         // 원하는 동작 수행
@@ -110,9 +118,11 @@ const MainDashboard = () => {
                   <div class="sb-sidenav-menu-heading">
                     <i class="fas fa-book-open"></i> 생활기록부
                   </div>
-                  <a className="nav-link" href="/liferecord/" onClick={handleLinkClick}>
-                    <div class="sb-nav-link-icon"></div>내 생활기록부
-                  </a>
+                  <div className="nav-link"  onClick={handleLinkClick}>
+                    내 생활기록부
+                    
+                  </div>
+                  
                   <div class="sb-sidenav-menu-heading">
                     <i class="fas fa-book-open"></i> 타임라인
                   </div>
