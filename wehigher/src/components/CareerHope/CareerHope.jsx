@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const CareerHopeModal = ({ isCareerModalOpen, closeModal, schoolRecordId }) => {
-    const { modalStates, openModal } = ModalManager();
+const CareerHopeModal = ({ isCareerModalOpen, schoolRecordId }) => {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [careerHope, setCareerHope] = useState([
         {
             grade: 1,
@@ -55,7 +55,7 @@ const CareerHopeModal = ({ isCareerModalOpen, closeModal, schoolRecordId }) => {
             .post(`/school_record/career/${schoolRecordId}`, { career: careerData }) // API 호출
             .then((response) => {
                 console.log('진로희망 생성 성공:', response.data);
-                closeModal('career'); // 모달 닫기
+                closeModal('isCareerModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('진로희망 생성 실패:', error);
@@ -68,7 +68,7 @@ const CareerHopeModal = ({ isCareerModalOpen, closeModal, schoolRecordId }) => {
             <div className="career-section">
                 <div className="section-header">
                     <h4>진로희망</h4>
-                    <button className="btn btn-secondary" onClick={() => openModal('career')}>
+                    <button className="btn btn-secondary" onClick={() => openModal('isCareerModalOpen')}>
                         수정
                     </button>
                 </div>
@@ -91,7 +91,7 @@ const CareerHopeModal = ({ isCareerModalOpen, closeModal, schoolRecordId }) => {
                 </div>
             </div>
 
-            {isCareerModalOpen && (
+            {modalStates.isCareerModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -99,7 +99,7 @@ const CareerHopeModal = ({ isCareerModalOpen, closeModal, schoolRecordId }) => {
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('career')}
+                                onClick={() => closeModal('isCareerModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>

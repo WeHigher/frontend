@@ -13474,22 +13474,22 @@ body {
 
 /* opinion Section */
 .opinion-section {
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .opinion-section .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .opinion-section .section-content {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 
@@ -13500,4 +13500,24 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: vertical;
+}
+
+
+/* main 요소 스타일링 */
+.main-content {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.main-content p {
+    font-size: 16px;
+    color: #666;
 }

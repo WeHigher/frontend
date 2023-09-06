@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ModalManager } from '../ModalManager';
 
-const OpinionModal = ({ isOpinionModalOpen, closeModal, schoolRecordId, api }) => {
-    const { modalStates, openModal } = ModalManager();
+const OpinionModal = ({ isOpinionModalOpen, schoolRecordId, api }) => {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [opinions, setOpinions] = useState([]);
 
     const handleOpinionChange = (event, index, field) => {
@@ -38,7 +38,7 @@ const OpinionModal = ({ isOpinionModalOpen, closeModal, schoolRecordId, api }) =
             })
             .then((response) => {
                 console.log('행동특성 및 종합의견 생성 성공:', response.data);
-                closeModal('opinion'); // 모달 닫기
+                closeModal('isOpinionModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('행동특성 및 종합의견 생성 실패:', error);
@@ -51,7 +51,7 @@ const OpinionModal = ({ isOpinionModalOpen, closeModal, schoolRecordId, api }) =
             <div className="opinion-section">
                 <div className="section-header">
                     <h4>행동특성 및 종합의견</h4>
-                    <button className="btn btn-secondary" onClick={() => openModal('opinion')}>
+                    <button className="btn btn-secondary" onClick={() => openModal('isOpinionModalOpen')}>
                         수정
                     </button>
                 </div>
@@ -71,7 +71,7 @@ const OpinionModal = ({ isOpinionModalOpen, closeModal, schoolRecordId, api }) =
                     )}
                 </div>
             </div>
-            {isOpinionModalOpen && (
+            {modalStates.isOpinionModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -79,7 +79,7 @@ const OpinionModal = ({ isOpinionModalOpen, closeModal, schoolRecordId, api }) =
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('opinion')}
+                                onClick={() => closeModal('isOpinionModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>

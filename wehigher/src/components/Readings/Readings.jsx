@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-function ReadingActivityModal({ isReadingModalOpen, closeModal, schoolRecordId }) {
-    const { modalStates, openModal } = ModalManager();
+function ReadingActivityModal({ isReadingModalOpen, schoolRecordId }) {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [readings, setReadings] = useState([]);
 
     const handleReadingChange = (event, index, field) => {
@@ -35,7 +35,7 @@ function ReadingActivityModal({ isReadingModalOpen, closeModal, schoolRecordId }
             .post(`/school_record/reading/${schoolRecordId}`, { readings })
             .then((response) => {
                 console.log('독서활동 생성 성공:', response.data);
-                closeModal('reading'); // 모달 닫기
+                closeModal('isReadingModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('독서활동 생성 실패:', error);
@@ -48,7 +48,7 @@ function ReadingActivityModal({ isReadingModalOpen, closeModal, schoolRecordId }
             <div className="reading-section">
                 <div className="section-header">
                     <h4>독서활동</h4>
-                    <button className="btn btn-secondary" onClick={() => openModal('reading')}>
+                    <button className="btn btn-secondary" onClick={() => openModal('isReadingModalOpen')}>
                         수정
                     </button>
                 </div>
@@ -70,7 +70,7 @@ function ReadingActivityModal({ isReadingModalOpen, closeModal, schoolRecordId }
                 </div>
             </div>
 
-            {isReadingModalOpen && (
+            {modalStates.isReadingModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -78,7 +78,7 @@ function ReadingActivityModal({ isReadingModalOpen, closeModal, schoolRecordId }
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('reading')}
+                                onClick={() => closeModal('isReadingModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>

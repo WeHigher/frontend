@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }) => {
-    const { modalStates, openModal } = ModalManager();
+const EducationalModal = ({ isEducationalModalOpen, schoolRecordId }) => {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [educational, setEducational] = useState([]);
 
     const handleEducationalChange = (event, index, field) => {
@@ -39,7 +39,7 @@ const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }
             .post(`/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
             .then((response) => {
                 console.log('교과학습발달상황 생성 성공:', response.data);
-                closeModal('educational'); // 모달 닫기
+                closeModal('isEducationalModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('교과학습발달상황 생성 실패:', error);
@@ -52,7 +52,7 @@ const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }
             <div className="educational-section">
                 <div className="section-header">
                     <h4>교과학습발달상황</h4>
-                    <button className="btn btn-secondary" onClick={() => openModal('educational')}>
+                    <button className="btn btn-secondary" onClick={() => openModal('isEducationalModalOpen')}>
                         수정
                     </button>
                 </div>
@@ -76,7 +76,7 @@ const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }
                 </div>
             </div>
 
-            {isEducationalModalOpen && (
+            {modalStates.isEducationalModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -84,7 +84,7 @@ const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('educational')}
+                                onClick={() => closeModal('isEducationalModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>
@@ -173,6 +173,13 @@ const EducationalModal = ({ isEducationalModalOpen, closeModal, schoolRecordId }
                                     </div>
                                 ))}
 
+                                <button
+                                    type="button"
+                                    className="modal-btn btn-primary"
+                                    onClick={addEducational}
+                                >
+                                    추가하기
+                                </button>
                                 <div className="submit-button-container">
                                     <button
                                         type="submit"

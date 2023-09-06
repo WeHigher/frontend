@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-function CreativeActivityModal({ isCreativeModalOpen, closeModal, schoolRecordId }) {
-    const { modalStates, openModal } = ModalManager();
+function CreativeActivityModal({ isCreativeModalOpen, schoolRecordId }) {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [creativeActivities, setCreativeActivities] = useState([]);
 
     const handleCreativeChange = (event, index, field) => {
@@ -34,7 +34,7 @@ function CreativeActivityModal({ isCreativeModalOpen, closeModal, schoolRecordId
             .post(`/school_record/creative/${schoolRecordId}`, { creativeActivities })
             .then((response) => {
                 console.log('창의적체험활동 생성 성공:', response.data);
-                closeModal('creative'); // 모달 닫기
+                closeModal('isCreativeModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('창의적체험활동 생성 실패:', error);
@@ -49,7 +49,7 @@ function CreativeActivityModal({ isCreativeModalOpen, closeModal, schoolRecordId
                     <h4>창의적체험활동</h4>
                     <button
                         className="btn btn-secondary"
-                        onClick={() => openModal('creative')}
+                        onClick={() => openModal('isCreativeModalOpen')}
                     >
                         수정
                     </button>
@@ -72,7 +72,7 @@ function CreativeActivityModal({ isCreativeModalOpen, closeModal, schoolRecordId
                 </div>
             </div >
 
-            {isCreativeModalOpen && (
+            {modalStates.isCreativeModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -80,7 +80,7 @@ function CreativeActivityModal({ isCreativeModalOpen, closeModal, schoolRecordId
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('creative')}
+                                onClick={() => closeModal('isCreativeModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>

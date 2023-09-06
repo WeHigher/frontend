@@ -42,8 +42,9 @@ const MainDashboard = () => {
   const handleCreateInterview = () => {
     const requestData = {
       model: '',
-      maxtoken: '',
+      maxToken: null,
       prompt: '',
+      role: ''
     };
 
     axios

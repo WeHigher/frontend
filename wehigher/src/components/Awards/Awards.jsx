@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const AwardsModal = ({ isAwardModalOpen, closeModal, schoolRecordId }) => {
-    const { modalStates, openModal } = ModalManager();
+const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
+    const { modalStates, openModal, closeModal } = ModalManager();
     const [awards, setAwards] = useState([
         {
             name: '',
@@ -64,7 +64,7 @@ const AwardsModal = ({ isAwardModalOpen, closeModal, schoolRecordId }) => {
             .post(`/school_record/award/${schoolRecordId}`, { awards: awardsData })
             .then((response) => {
                 console.log('수상경력 데이터 전송 성공:', response.data);
-                closeModal('award'); // 모달 닫기
+                closeModal('isAwardModalOpen'); // 모달 닫기
             })
             .catch((error) => {
                 console.error('수상경력 데이터 전송 실패:', error);
@@ -151,7 +151,7 @@ const AwardsModal = ({ isAwardModalOpen, closeModal, schoolRecordId }) => {
                 </div>
             </section>
 
-            {isAwardModalOpen && (
+            {modalStates.isAwardModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-main">
                         <div className="modal-header">
@@ -159,7 +159,7 @@ const AwardsModal = ({ isAwardModalOpen, closeModal, schoolRecordId }) => {
                             <button
                                 type="button"
                                 className="close"
-                                onClick={() => closeModal('award')}
+                                onClick={() => closeModal('isAwardModalOpen')}
                             >
                                 <span>&times;</span>
                             </button>
