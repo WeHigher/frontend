@@ -38,6 +38,24 @@ const MainDashboard = () => {
       });
   }, []);
 
+  // 면접 생성 버튼 클릭 핸들러
+  const handleCreateInterview = () => {
+    const requestData = {
+      model: '',
+      maxtoken: '',
+      prompt: '',
+    };
+
+    axios
+      .post(`/api/chatgpt/completion/chat/`, requestData)
+      .then((response) => {
+
+      })
+      .catch((error) => {
+        console.error('Error creating interview:', error);
+      });
+  };
+
   return (
     <div className="app">
       {/* Navbar 모듈 렌더링 */}
@@ -51,6 +69,7 @@ const MainDashboard = () => {
             {/* InterviewCard 모듈 렌더링 */}
             <InterviewCard title="면접 1" />
           </div>
+          <button onClick={handleCreateInterview}>면접 생성하기</button>
         </main>
       </div>
     </div>
