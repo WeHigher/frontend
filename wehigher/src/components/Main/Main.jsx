@@ -2,6 +2,23 @@ import React, { useState, useEffect } from 'react';
 import api from '../../Axios.js';
 import { Link } from 'react-router-dom';
 import './Main.css';
+// import axios from 'axios'
+
+// 쿠키에서 액세스 토큰을 가져오는 함수
+function getAccessTokenFromCookie() {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+      const [name, value] = cookie.trim().split('=');
+      if (name === 'accessToken') {
+        return decodeURIComponent(value);
+      }
+    }
+    return null;
+  }
+  
+  // 가져온 액세스 토큰을 변수에 저장
+  const accessToken = getAccessTokenFromCookie();
+  api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
 const MainDashboard = () => {
   useEffect(() => {
@@ -34,6 +51,24 @@ const MainDashboard = () => {
       );
     }
   };
+
+  // 클릭 이벤트 핸들러
+  const handleLinkClick = (event) => {
+    event.preventDefault(); // 기본 링크 동작 방지
+    // POST 요청 보내기
+    api.post('/school_record', { /* POST 데이터 */ })
+      .then((response) => {
+        // POST 요청 성공 시 처리
+        console.log('POST 요청 성공:', response.data);
+        // 원하는 동작 수행
+      })
+      .catch((error) => {
+        // POST 요청 실패 시 처리
+        console.error('POST 요청 실패:', error);
+        // 오류 처리 또는 메시지 표시
+      });
+  };
+
 
   return (
     <html lang="en">
@@ -75,7 +110,7 @@ const MainDashboard = () => {
                   <div class="sb-sidenav-menu-heading">
                     <i class="fas fa-book-open"></i> 생활기록부
                   </div>
-                  <a class="nav-link" href="/liferecord">
+                  <a className="nav-link" href="/liferecord/" onClick={handleLinkClick}>
                     <div class="sb-nav-link-icon"></div>내 생활기록부
                   </a>
                   <div class="sb-sidenav-menu-heading">
