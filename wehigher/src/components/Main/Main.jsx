@@ -46,24 +46,20 @@ const MainDashboard = () => {
     };
 
     api
-      .post(`/api/chatgpt/completion/chat`, requestData)
+      .post(`/api/chatgpt/completion/chat/`, requestData)
       .then((response) => {
         if (response.data) {
           const messages = response.data.messages.map((messageObject) => messageObject.message);
+          const messageLines = messages.map((message) => message.split('\n'));
+          localStorage.setItem('messageLines', JSON.stringify(messageLines));
 
-          const confirmation = window.confirm(
-            '입력한 생활기록부 내용을 바탕으로 면접을 생성하시겠습니까?'
-          );
-
-          if (confirmation) {
-            localStorage.setItem('initQuestion', JSON.stringify(messages));
-            window.location.href = '/interview';
-          }
+          window.location.href = '/interview';
         }
       })
       .catch((error) => {
         console.error('Error creating interview:', error);
       });
+
     // window.location.href = '/interview';
   };
 

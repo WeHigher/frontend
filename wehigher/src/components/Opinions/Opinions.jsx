@@ -16,7 +16,7 @@ const OpinionModal = ({ schoolRecordId }) => {
         setOpinions((prevOpinions) => [
             ...prevOpinions,
             {
-                grade: '',
+                grade: 1,
                 content: '',
             },
         ]);
