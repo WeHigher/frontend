@@ -11,11 +11,9 @@ const MainDashboard = () => {
   const [userName, setUserName] = useState('');
   const [hasRequestBeenMade, setHasRequestBeenMade] = useState(false);
 
-  useEffect(() => {
-    // 가져온 액세스 토큰을 변수에 저장
-    const accessToken = getAccessTokenFromCookie();
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  localStorage.setItem('accessToken', getAccessTokenFromCookie())
 
+  useEffect(() => {
     // API 호출 및 setUserName으로 사용자 이름 설정
     api
       .get('/user')
@@ -38,8 +36,6 @@ const MainDashboard = () => {
     }
     return null;
   }
-
-  localStorage.setItem('accessToken', getAccessTokenFromCookie())
 
   // 면접 생성 버튼 클릭 핸들러
   const handleCreateInterview = () => {
