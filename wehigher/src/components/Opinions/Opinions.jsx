@@ -92,7 +92,7 @@ const OpinionModal = ({ schoolRecordId }) => {
                                         <div className="form-group">
                                             <label>학년</label>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
                                                 value={opinion.grade}
                                                 onChange={(e) =>
