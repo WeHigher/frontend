@@ -20,7 +20,7 @@ const LifeRecord = () => {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
       const [name, value] = cookie.trim().split('=');
-      if (name === 'access_token') {
+      if (name === 'accessToken') {
         return decodeURIComponent(value);
       }
     }
@@ -29,7 +29,7 @@ const LifeRecord = () => {
 
   useEffect(() => {
     const accessToken = getAccessTokenFromCookie();
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
     //  API 호출
     api

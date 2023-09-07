@@ -8,7 +8,7 @@ const Sidebar = ({ userName }) => {
         const cookies = document.cookie.split(';');
         for (const cookie of cookies) {
             const [name, value] = cookie.trim().split('=');
-            if (name === 'access_token') {
+            if (name === 'accessToken') {
                 return decodeURIComponent(value);
             }
         }
@@ -16,8 +16,8 @@ const Sidebar = ({ userName }) => {
     }
 
     const handleLinkClick = (event) => {
-        const accessToken = getAccessTokenFromCookie();
-        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        // const accessToken = getAccessTokenFromCookie();
+        // api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
         event.preventDefault(); // 기본 링크 동작 방지
         // POST 요청 보내기
@@ -42,9 +42,9 @@ const Sidebar = ({ userName }) => {
             </div>
             <div>
                 <div>
-                    <p className="nav-link" onClick={handleLinkClick}>
+                    <button className="nav-link" onClick={handleLinkClick}>
                         내 생활기록부
-                    </p>
+                    </button>
                 </div>
                 {/* <div className="sidebar-divider"></div>
                 <div>
