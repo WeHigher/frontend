@@ -25,6 +25,7 @@ const Sidebar = ({ userName }) => {
             .then((response) => {
                 // POST 요청 성공 시 처리
                 console.log('POST 요청 성공:', response.data);
+                // window.location.href = '/liferecord';
             })
             .catch((error) => {
                 // POST 요청 실패 시 처리

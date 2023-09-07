@@ -93,6 +93,7 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
                                     onChange={(e) =>
                                         handleAwardChange(e, index, 'name')
                                     }
+                                    readOnly
                                 />
                             </div>
                             <div className="form-group">
@@ -104,6 +105,7 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
                                     onChange={(e) =>
                                         handleAwardChange(e, index, 'tier')
                                     }
+                                    readOnly
                                 />
                             </div>
                             <div className="form-group">
@@ -115,6 +117,7 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
                                     onChange={(e) =>
                                         handleAwardChange(e, index, 'date')
                                     }
+                                    readOnly
                                 />
                             </div>
                             <div className="form-group">
@@ -126,6 +129,7 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
                                     onChange={(e) =>
                                         handleAwardChange(e, index, 'institution')
                                     }
+                                    readOnly
                                 />
                             </div>
                             <div className="form-group">
@@ -137,6 +141,7 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
                                     onChange={(e) =>
                                         handleAwardChange(e, index, 'target')
                                     }
+                                    readOnly
                                 />
                             </div>
                             <button

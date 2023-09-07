@@ -51,11 +51,20 @@ const MainDashboard = () => {
     axios
       .post(`/api/chatgpt/completion/chat/`, requestData)
       .then((response) => {
+        // if (response.data) {
+        //   const confirmation = window.confirm(
+        //     '입력한 생활기록부 내용을 바탕으로 면접을 생성하시겠습니까?'
+        //   );
 
+        //   if (confirmation) {
+        //     window.location.href = '/interview';
+        //   }
+        // }
       })
       .catch((error) => {
         console.error('Error creating interview:', error);
       });
+    window.location.href = '/interview';
   };
 
   return (
