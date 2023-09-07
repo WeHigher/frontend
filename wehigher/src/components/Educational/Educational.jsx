@@ -54,7 +54,7 @@ const EducationalModal = ({ schoolRecordId }) => {
                 <div className="section-header">
                     <h4>교과학습발달상황</h4>
                     <button className="btn btn-secondary" onClick={() => openModal('isEducationalModalOpen')}>
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">

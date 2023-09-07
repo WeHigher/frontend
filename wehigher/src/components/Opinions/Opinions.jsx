@@ -52,7 +52,7 @@ const OpinionModal = ({ schoolRecordId }) => {
                 <div className="section-header">
                     <h4>행동특성 및 종합의견</h4>
                     <button className="btn btn-secondary" onClick={() => openModal('isOpinionModalOpen')}>
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">

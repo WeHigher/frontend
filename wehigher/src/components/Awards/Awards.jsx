@@ -4,15 +4,7 @@ import { ModalManager } from '../ModalManager';
 
 const AwardsModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
-    const [awards, setAwards] = useState([
-        {
-            name: '',
-            tier: '',
-            date: '',
-            institution: '',
-            target: '',
-        },
-    ]);
+    const [awards, setAwards] = useState([]);
 
     const addAward = () => {
         setAwards([
@@ -79,81 +71,25 @@ const AwardsModal = ({ schoolRecordId }) => {
                 <div className="section-header">
                     <h4>수상경력</h4>
                     <button className="btn btn-secondary" onClick={() => openModal('isAwardModalOpen')}>
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">
-                    {awards.map((award, index) => (
-                        <div key={index} className="award-form">
-                            <div className="form-group">
-                                <label>수상명</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={award.name}
-                                    onChange={(e) =>
-                                        handleAwardChange(e, index, 'name')
-                                    }
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>등급(위)</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={award.tier}
-                                    onChange={(e) =>
-                                        handleAwardChange(e, index, 'tier')
-                                    }
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>수상일자</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={award.date}
-                                    onChange={(e) =>
-                                        handleAwardChange(e, index, 'date')
-                                    }
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>수여기관</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={award.institution}
-                                    onChange={(e) =>
-                                        handleAwardChange(e, index, 'institution')
-                                    }
-                                    readOnly
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>참가대상(참가인원)</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={award.target}
-                                    onChange={(e) =>
-                                        handleAwardChange(e, index, 'target')
-                                    }
-                                    readOnly
-                                />
-                            </div>
-                            <button
-                                type="button"
-                                className="modal-btn btn-danger"
-                                onClick={() => removeAward(index)}
-                            >
-                                삭제
-                            </button>
+                    {awards.length > 0 ? (
+                        <div>
+                            {awards.map((award, index) => (
+                                <div key={index} className="career-hope-form">
+                                    <p>수상명 {award.name}</p>
+                                    <p>등급(위) {award.tier}</p>
+                                    <p>수상일자 {award.date}</p>
+                                    <p>수여기관 {award.institution}</p>
+                                    <p>참가대상(참가인원) {award.target}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    ) : (
+                        <p>수상경력이 설정되지 않았습니다.</p>
+                    )}
                 </div>
             </section>
 

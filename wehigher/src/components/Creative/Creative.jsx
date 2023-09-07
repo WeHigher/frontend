@@ -52,7 +52,7 @@ function CreativeActivityModal({ schoolRecordId }) {
                         className="btn btn-secondary"
                         onClick={() => openModal('isCreativeModalOpen')}
                     >
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">

@@ -50,7 +50,7 @@ function ReadingActivityModal({ schoolRecordId }) {
                 <div className="section-header">
                     <h4>독서활동</h4>
                     <button className="btn btn-secondary" onClick={() => openModal('isReadingModalOpen')}>
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">

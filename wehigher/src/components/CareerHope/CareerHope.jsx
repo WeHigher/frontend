@@ -4,34 +4,25 @@ import { ModalManager } from '../ModalManager';
 
 const CareerHopeModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
-    const [careerHope, setCareerHope] = useState([
-        {
-            grade: 1,
-            specialtyOrInterest: '',
-            studentHope: '',
-            parentHope: '',
-            reason: '',
-        },
-        {
-            grade: 2,
-            specialtyOrInterest: '',
-            studentHope: '',
-            parentHope: '',
-            reason: '',
-        },
-        {
-            grade: 3,
-            specialtyOrInterest: '',
-            studentHope: '',
-            parentHope: '',
-            reason: '',
-        },
-    ]);
+    const [careerHope, setCareerHope] = useState([]);
 
     const handleCareerHopeChange = (event, index, field) => {
         const newCareerHope = [...careerHope];
         newCareerHope[index][field] = event.target.value;
         setCareerHope(newCareerHope);
+    };
+
+    const addCareerHope = () => {
+        setCareerHope([
+            ...careerHope,
+            {
+                grade: 1,
+                specialtyOrInterest: '',
+                studentHope: '',
+                parentHope: '',
+                reason: '',
+            },
+        ]);
     };
 
     const removeCareerHope = (index) => {
@@ -70,7 +61,7 @@ const CareerHopeModal = ({ schoolRecordId }) => {
                 <div className="section-header">
                     <h4>진로희망</h4>
                     <button className="btn btn-secondary" onClick={() => openModal('isCareerModalOpen')}>
-                        수정
+                        생성
                     </button>
                 </div>
                 <div className="section-content">
@@ -177,7 +168,13 @@ const CareerHopeModal = ({ schoolRecordId }) => {
                                         </button>
                                     </div>
                                 ))}
-
+                                <button
+                                    type="button"
+                                    className="modal-btn btn-primary"
+                                    onClick={addCareerHope}
+                                >
+                                    추가하기
+                                </button>
                                 <div className="submit-button-container">
                                     <button
                                         type="submit"
