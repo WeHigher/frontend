@@ -44,24 +44,24 @@ const AwardsModal = ({ schoolRecordId }) => {
         event.preventDefault();
 
         const awardsData = awards.map((award) => ({
-            title: award.name,
+            name: award.name,
             tier: award.tier,
             date: award.date,
             institution: award.institution,
             target: award.target,
         }));
 
-        // Assuming you have access to the 'api' here.
-        api
-            .post(`/school_record/award/${schoolRecordId}`, awardsData)
-            .then((response) => {
-                console.log('수상경력 데이터 전송 성공:', response.data);
-                setAwards([]);
-                closeModal('isAwardModalOpen'); // 모달 닫기
-            })
-            .catch((error) => {
-                console.error('수상경력 데이터 전송 실패:', error);
-            });
+        if (schoolRecordId) {
+            api
+                .post(`/school_record/award/${schoolRecordId}`, awardsData)
+                .then((response) => {
+                    console.log('수상경력 데이터 전송 성공:', response.data);
+                    closeModal('isAwardModalOpen'); // 모달 닫기
+                })
+                .catch((error) => {
+                    console.error('수상경력 데이터 전송 실패:', error);
+                });
+        }
     };
 
     return (

@@ -34,7 +34,7 @@ const LifeRecord = () => {
   const { modalStates, openModal, closeModal } = ModalManager();
 
   // 사용자 이름이 설정되면 화면에 표시
-  const [schoolRecordId, setSchoolRecordId] = useState('null'); // 생활기록부 ID
+  const [schoolRecordId, setSchoolRecordId] = useState(''); // 생활기록부 ID
 
   return (
     <div className="app">

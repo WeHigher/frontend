@@ -34,17 +34,17 @@ const EducationalModal = ({ schoolRecordId }) => {
     const handleEducationalFormSubmit = (event) => {
         event.preventDefault();
 
-        // api를 사용하여 서버에 데이터 전송
-        api
-            .post(`/school_record/educational/${schoolRecordId}`, educational) // API 호출
-            .then((response) => {
-                console.log('교과학습발달상황 생성 성공:', response.data);
-                setEducational([]);
-                closeModal('isEducationalModalOpen'); // 모달 닫기
-            })
-            .catch((error) => {
-                console.error('교과학습발달상황 생성 실패:', error);
-            });
+        if (schoolRecordId) {
+            api
+                .post(`/school_record/educational/${schoolRecordId}`, educational) // API 호출
+                .then((response) => {
+                    console.log('교과학습발달상황 생성 성공:', response.data);
+                    closeModal('isEducationalModalOpen'); // 모달 닫기
+                })
+                .catch((error) => {
+                    console.error('교과학습발달상황 생성 실패:', error);
+                });
+        }
     };
 
     return (
@@ -64,9 +64,9 @@ const EducationalModal = ({ schoolRecordId }) => {
                                 <div key={index}>
                                     학년: {data.grade}<br />
                                     학기: {data.semester}<br />
-                                    과목: {data.subject}<br />
-                                    코스: {data.course}<br />
-                                    순위: {data.rank}<br />
+                                    교과: {data.subject}<br />
+                                    과목: {data.course}<br />
+                                    석차등급: {data.rank}<br />
                                     상세 및 특기사항: {data.detailAndSpecialty}
                                 </div>
                             ))}
@@ -117,7 +117,7 @@ const EducationalModal = ({ schoolRecordId }) => {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label>과목</label>
+                                            <label>교과</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -128,7 +128,7 @@ const EducationalModal = ({ schoolRecordId }) => {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label>코스</label>
+                                            <label>과목</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -139,7 +139,7 @@ const EducationalModal = ({ schoolRecordId }) => {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label>순위</label>
+                                            <label>석차등급</label>
                                             <input
                                                 type="number"
                                                 className="form-control"

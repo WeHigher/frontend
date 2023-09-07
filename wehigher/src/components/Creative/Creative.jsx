@@ -29,17 +29,17 @@ function CreativeActivityModal({ schoolRecordId }) {
     const handleCreativeFormSubmit = (event) => {
         event.preventDefault();
 
-        // 데이터를 API에 POST 요청으로 전송
-        api
-            .post(`/school_record/creative/${schoolRecordId}`, creativeActivities)
-            .then((response) => {
-                console.log('창의적체험활동 생성 성공:', response.data);
-                closeModal('isCreativeModalOpen'); // 모달 닫기
-                setCreativeActivities([]);
-            })
-            .catch((error) => {
-                console.error('창의적체험활동 생성 실패:', error);
-            });
+        if (schoolRecordId) {
+            api
+                .post(`/school_record/creative/${schoolRecordId}`, creativeActivities)
+                .then((response) => {
+                    console.log('창의적체험활동 생성 성공:', response.data);
+                    closeModal('isCreativeModalOpen'); // 모달 닫기
+                })
+                .catch((error) => {
+                    console.error('창의적체험활동 생성 실패:', error);
+                });
+        }
     };
 
     return (

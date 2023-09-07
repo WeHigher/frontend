@@ -33,16 +33,17 @@ const OpinionModal = ({ schoolRecordId }) => {
             content: opinion.content,
         }));
 
-        api
-            .post(`/school_record/opinion/${schoolRecordId}`, formattedOpinions)
-            .then((response) => {
-                console.log('행동특성 및 종합의견 생성 성공:', response.data);
-                setOpinions([]);
-                closeModal('isOpinionModalOpen'); // 모달 닫기
-            })
-            .catch((error) => {
-                console.error('행동특성 및 종합의견 생성 실패:', error);
-            });
+        if (schoolRecordId) {
+            api
+                .post(`/school_record/opinion/${schoolRecordId}`, formattedOpinions)
+                .then((response) => {
+                    console.log('행동특성 및 종합의견 생성 성공:', response.data);
+                    closeModal('isOpinionModalOpen'); // 모달 닫기
+                })
+                .catch((error) => {
+                    console.error('행동특성 및 종합의견 생성 실패:', error);
+                });
+        }
     };
 
     return (

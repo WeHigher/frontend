@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../Axios.js';
-import axios from 'axios'
 
 import Navbar from '../Navbar/Navbar';
 import InterviewCard from '../InterviewCard/InterviewCard';
@@ -9,7 +8,6 @@ import './Main.css';
 
 const MainDashboard = () => {
   const [userName, setUserName] = useState('');
-  const [hasRequestBeenMade, setHasRequestBeenMade] = useState(false);
 
   localStorage.setItem('accessToken', getAccessTokenFromCookie())
 
@@ -19,6 +17,7 @@ const MainDashboard = () => {
       .get('/user')
       .then((response) => {
         setUserName(response.data.name);
+        console.log('Success fetching user name:', userName);
       })
       .catch((error) => {
         console.error('Error fetching user name:', error);
@@ -47,22 +46,25 @@ const MainDashboard = () => {
     };
 
     api
-      .post(`/api/chatgpt/completion/chat/`, requestData)
+      .post(`/api/chatgpt/completion/chat`, requestData)
       .then((response) => {
-        // if (response.data) {
-        //   const confirmation = window.confirm(
-        //     '입력한 생활기록부 내용을 바탕으로 면접을 생성하시겠습니까?'
-        //   );
+        if (response.data) {
+          const messages = response.data.messages.map((messageObject) => messageObject.message);
 
-        //   if (confirmation) {
-        //     window.location.href = '/interview';
-        //   }
-        // }
+          const confirmation = window.confirm(
+            '입력한 생활기록부 내용을 바탕으로 면접을 생성하시겠습니까?'
+          );
+
+          if (confirmation) {
+            localStorage.setItem('initQuestion', JSON.stringify(messages));
+            window.location.href = '/interview';
+          }
+        }
       })
       .catch((error) => {
         console.error('Error creating interview:', error);
       });
-    window.location.href = '/interview';
+    // window.location.href = '/interview';
   };
 
   return (

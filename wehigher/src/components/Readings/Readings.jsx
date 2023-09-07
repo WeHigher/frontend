@@ -30,17 +30,18 @@ function ReadingActivityModal({ schoolRecordId }) {
 
     const handleReadingFormSubmit = (event) => {
         event.preventDefault();
-        // api를 사용하여 서버에 데이터 전송
-        api
-            .post(`/school_record/reading/${schoolRecordId}`, readings)
-            .then((response) => {
-                console.log('독서활동 생성 성공:', response.data);
-                setReadings([]);
-                closeModal('isReadingModalOpen'); // 모달 닫기
-            })
-            .catch((error) => {
-                console.error('독서활동 생성 실패:', error);
-            });
+
+        if (schoolRecordId) {
+            api
+                .post(`/school_record/reading/${schoolRecordId}`, readings)
+                .then((response) => {
+                    console.log('독서활동 생성 성공:', response.data);
+                    closeModal('isReadingModalOpen'); // 모달 닫기
+                })
+                .catch((error) => {
+                    console.error('독서활동 생성 실패:', error);
+                });
+        }
     };
 
     return (
