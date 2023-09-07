@@ -46,7 +46,7 @@ const MainDashboard = () => {
     };
 
     api
-      .post(`/api/chatgpt/completion/chat/`, requestData)
+      .post(`/api/chatgpt/completion/chat`, requestData)
       .then((response) => {
         if (response.data) {
           const messages = response.data.messages.map((messageObject) => messageObject.message);
