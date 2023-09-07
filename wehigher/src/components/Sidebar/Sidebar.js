@@ -3,22 +3,7 @@ import api from '../../Axios.js';
 import './Sidebar.css';
 
 const Sidebar = ({ userName }) => {
-    // 쿠키에서 액세스 토큰을 가져오는 함수
-    function getAccessTokenFromCookie() {
-        const cookies = document.cookie.split(';');
-        for (const cookie of cookies) {
-            const [name, value] = cookie.trim().split('=');
-            if (name === 'access_token') {
-                return decodeURIComponent(value);
-            }
-        }
-        return null;
-    }
-
     const handleLinkClick = (event) => {
-        const accessToken = getAccessTokenFromCookie();
-        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
         event.preventDefault(); // 기본 링크 동작 방지
         // POST 요청 보내기
         api.post('/school_record')

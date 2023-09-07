@@ -32,12 +32,14 @@ const MainDashboard = () => {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
       const [name, value] = cookie.trim().split('=');
-      if (name === 'access_token') {
+      if (name === 'accessToken') {
         return decodeURIComponent(value);
       }
     }
     return null;
   }
+
+  localStorage.setItem('accessToken', getAccessTokenFromCookie())
 
   // 면접 생성 버튼 클릭 핸들러
   const handleCreateInterview = () => {

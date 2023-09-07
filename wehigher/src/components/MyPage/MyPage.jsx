@@ -7,23 +7,8 @@ const MyPage = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  // 쿠키에서 액세스 토큰을 가져오는 함수
-  function getAccessTokenFromCookie() {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'access_token') {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
-  }
-
   // 소셜 로그인 후 회원 정보 설정
   useEffect(() => {
-    const accessToken = getAccessTokenFromCookie();
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
     // API 호출을 통해 회원 정보 가져오기
     api
       .get('/user')

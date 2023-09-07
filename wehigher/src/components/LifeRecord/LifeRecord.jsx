@@ -16,22 +16,7 @@ import './LifeRecord.css';
 import './Modal.css';
 
 const LifeRecord = () => {
-  // 쿠키에서 액세스 토큰을 가져오는 함수
-  function getAccessTokenFromCookie() {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'access_token') {
-        return decodeURIComponent(value);
-      }
-    }
-    return null;
-  }
-
   useEffect(() => {
-    const accessToken = getAccessTokenFromCookie();
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
     //  API 호출
     api
       .get('/user')
