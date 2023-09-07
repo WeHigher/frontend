@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import api from '../../Axios.js';
 import './Login.css';
 
 const SocialLoginApp = () => {

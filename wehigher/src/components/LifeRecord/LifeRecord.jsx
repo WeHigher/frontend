@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../Axios.js';
-import { Link } from 'react-router-dom';
-import './LifeRecord.css';
-import './Modal.css';
+import axios from 'axios';
+
 import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
-
 import AwardsModal from '../Awards/Awards';
 import CareerHopeModal from '../CareerHope/CareerHope';
 import CreativeModal from '../Creative/Creative';
@@ -13,6 +11,9 @@ import EducationalModal from '../Educational/Educational';
 import ReadingModal from '../Readings/Readings';
 import OpinionModal from '../Opinions/Opinions';
 import { ModalManager } from '../ModalManager.jsx';
+
+import './LifeRecord.css';
+import './Modal.css';
 
 const LifeRecord = () => {
   // 쿠키에서 액세스 토큰을 가져오는 함수
