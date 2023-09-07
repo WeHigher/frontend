@@ -34,7 +34,7 @@ const LifeRecord = () => {
   const { modalStates, openModal, closeModal } = ModalManager();
 
   // 사용자 이름이 설정되면 화면에 표시
-  const [schoolRecordId, setSchoolRecordId] = useState(null); // 생활기록부 ID
+  const [schoolRecordId, setSchoolRecordId] = useState('null'); // 생활기록부 ID
 
   return (
     <div className="app">
@@ -45,40 +45,27 @@ const LifeRecord = () => {
         <Sidebar userName={userName} />
         <div className='main-content'>
           <AwardsModal
-            isModalOpen={modalStates.isAwardModalOpen}
             schoolRecordId={schoolRecordId}
-            api={api}
           />
 
           <CareerHopeModal
-            isModalOpen={modalStates.isCareerModalOpen}
-
             schoolRecordId={schoolRecordId}
-            api={api}
           />
 
           <CreativeModal
-            isModalOpen={modalStates.isCreativeModalOpen}
             schoolRecordId={schoolRecordId}
-            api={api}
           />
 
           <EducationalModal
-            isModalOpen={modalStates.isEducationalModalOpen}
             schoolRecordId={schoolRecordId}
-            api={api}
           />
 
           <ReadingModal
-            isModalOpen={modalStates.isReadingModalOpen}
             schoolRecordId={schoolRecordId}
-            api={api}
           />
 
           <OpinionModal
-            isModalOpen={modalStates.isOpinionModalOpen}
             schoolRecordId={schoolRecordId}
-            api={api}
           />
         </div>
       </div>

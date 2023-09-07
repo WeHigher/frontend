@@ -9,13 +9,13 @@ const Navbar = ({ userName }) => {
             <Link to="/main" className="navbar-logo">
                 WeHigher
             </Link>
-            <div className="navbar-user">
+            {/* <div className="navbar-user">
                 {userName ? (
                     <Link to="/mypage">사용자 이름: {userName}</Link>
                 ) : (
                     <Link to="/mypage">사용자 이름이 없습니다.</Link>
                 )}
-            </div>
+            </div> */}
         </nav>
     );
 };

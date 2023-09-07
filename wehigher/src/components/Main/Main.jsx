@@ -46,7 +46,7 @@ const MainDashboard = () => {
       role: ''
     };
 
-    axios
+    api
       .post(`/api/chatgpt/completion/chat/`, requestData)
       .then((response) => {
         // if (response.data) {

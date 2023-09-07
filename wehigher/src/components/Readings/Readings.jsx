@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-function ReadingActivityModal({ isReadingModalOpen, schoolRecordId }) {
+function ReadingActivityModal({ schoolRecordId }) {
     const { modalStates, openModal, closeModal } = ModalManager();
     const [readings, setReadings] = useState([]);
 
@@ -32,9 +32,10 @@ function ReadingActivityModal({ isReadingModalOpen, schoolRecordId }) {
         event.preventDefault();
         // api를 사용하여 서버에 데이터 전송
         api
-            .post(`/school_record/reading/${schoolRecordId}`, { readings })
+            .post(`/school_record/reading/${schoolRecordId}`, readings)
             .then((response) => {
                 console.log('독서활동 생성 성공:', response.data);
+                setReadings([]);
                 closeModal('isReadingModalOpen'); // 모달 닫기
             })
             .catch((error) => {

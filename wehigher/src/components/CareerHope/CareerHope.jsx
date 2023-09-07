@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const CareerHopeModal = ({ isCareerModalOpen, schoolRecordId }) => {
+const CareerHopeModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
     const [careerHope, setCareerHope] = useState([
         {
@@ -52,9 +52,10 @@ const CareerHopeModal = ({ isCareerModalOpen, schoolRecordId }) => {
 
         // Assuming you have access to the 'api' here.
         api
-            .post(`/school_record/career/${schoolRecordId}`, { career: careerData }) // API 호출
+            .post(`/school_record/career/${schoolRecordId}`, careerData) // API 호출
             .then((response) => {
                 console.log('진로희망 생성 성공:', response.data);
+                setCareerHope([]);
                 closeModal('isCareerModalOpen'); // 모달 닫기
             })
             .catch((error) => {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const OpinionModal = ({ isOpinionModalOpen, schoolRecordId, api }) => {
+const OpinionModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
     const [opinions, setOpinions] = useState([]);
 
@@ -33,11 +34,10 @@ const OpinionModal = ({ isOpinionModalOpen, schoolRecordId, api }) => {
         }));
 
         api
-            .post(`/school_record/opinion/${schoolRecordId}`, {
-                opinions: formattedOpinions,
-            })
+            .post(`/school_record/opinion/${schoolRecordId}`, formattedOpinions)
             .then((response) => {
                 console.log('행동특성 및 종합의견 생성 성공:', response.data);
+                setOpinions([]);
                 closeModal('isOpinionModalOpen'); // 모달 닫기
             })
             .catch((error) => {

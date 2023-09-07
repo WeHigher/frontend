@@ -6,8 +6,6 @@ import Login from './components/Login/Login';
 import Main from './components/Main/Main';
 import LifeRecord from './components/LifeRecord/LifeRecord';
 import MyPage from './components/MyPage/MyPage';
-import Interview from './components/Interview/Interview';
-
 
 const App = () => {
   return (
@@ -17,7 +15,6 @@ const App = () => {
         <Route path="/main" element={<Main />} />
         <Route path="/liferecord" element={<LifeRecord />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/interview" element={<Interview />} />
       </Routes>
     </Router>
   );

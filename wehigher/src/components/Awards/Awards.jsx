@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
+const AwardsModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
     const [awards, setAwards] = useState([
         {
@@ -61,9 +61,10 @@ const AwardsModal = ({ isAwardModalOpen, schoolRecordId }) => {
 
         // Assuming you have access to the 'api' here.
         api
-            .post(`/school_record/award/${schoolRecordId}`, { awards: awardsData })
+            .post(`/school_record/award/${schoolRecordId}`, awardsData)
             .then((response) => {
                 console.log('수상경력 데이터 전송 성공:', response.data);
+                setAwards([]);
                 closeModal('isAwardModalOpen'); // 모달 닫기
             })
             .catch((error) => {

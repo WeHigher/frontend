@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import api from '../../Axios.js';
 import { ModalManager } from '../ModalManager';
 
-const EducationalModal = ({ isEducationalModalOpen, schoolRecordId }) => {
+const EducationalModal = ({ schoolRecordId }) => {
     const { modalStates, openModal, closeModal } = ModalManager();
     const [educational, setEducational] = useState([]);
 
@@ -36,9 +36,10 @@ const EducationalModal = ({ isEducationalModalOpen, schoolRecordId }) => {
 
         // api를 사용하여 서버에 데이터 전송
         api
-            .post(`/school_record/educational/${schoolRecordId}`, { educational }) // API 호출
+            .post(`/school_record/educational/${schoolRecordId}`, educational) // API 호출
             .then((response) => {
                 console.log('교과학습발달상황 생성 성공:', response.data);
+                setEducational([]);
                 closeModal('isEducationalModalOpen'); // 모달 닫기
             })
             .catch((error) => {
