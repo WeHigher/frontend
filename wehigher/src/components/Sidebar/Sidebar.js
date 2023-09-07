@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../../Axios.js';
+import { api } from '../../Axios';
 import './Sidebar.css';
 
 const Sidebar = ({ userName }) => {

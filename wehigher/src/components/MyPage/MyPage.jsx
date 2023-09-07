@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../Axios.js';
+import { api } from '../../Axios';
 import './MyPage.css';
 
 const MyPage = () => {

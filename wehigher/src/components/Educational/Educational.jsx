@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../../Axios.js';
+import { api } from '../../Axios';
 import { ModalManager } from '../ModalManager';
 
 const EducationalModal = ({ schoolRecordId }) => {

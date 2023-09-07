@@ -75,10 +75,10 @@ export const CheckHandness = async (results) => {
         const data1 = await CalculateAngle(joint1);
         const data2 = await CalculateAngle(joint2);
 
-        if (results.handednesses[0][0].category_name == "LEFT"){
-            return { "left" : data1, "right" : data2 };
+        if (results.handednesses[0][0].categoryName == "LEFT"){
+            return { "left" : data2, "right" : data1};
         } else{
-            return { "left" : data2, "right" : data1 };
+            return { "left" : data1, "right" : data2 };
         } 
 
     } else if(results.handednesses.length === 1){
@@ -91,11 +91,11 @@ export const CheckHandness = async (results) => {
         }
 
         const data = await CalculateAngle(joint);
-
-        if (results.handednesses[0][0].category_name == "LEFT"){
-            return { "left" : data, "right" : [] };
-        } else{
+        
+        if (results.handednesses[0][0].categoryName == "LEFT"){
             return { "left" : [], "right" : data };
+        } else{
+            return { "left" : data, "right" : [] };
         } 
 
     } else {

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../Axios.js';
-import axios from 'axios'
-
+import { api } from '../../Axios';
 import Navbar from '../Navbar/Navbar';
 import InterviewCard from '../InterviewCard/InterviewCard';
 import Sidebar from '../Sidebar/Sidebar';
